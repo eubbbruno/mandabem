@@ -424,7 +424,7 @@ export function EvaluationPanel({ submissions }: EvaluationPanelProps) {
                 loading={loading}
                 size="lg"
                 fullWidth
-                variant="accent"
+                variant="primary"
               >
                 <Save className="h-5 w-5" />
                 Salvar Avaliação

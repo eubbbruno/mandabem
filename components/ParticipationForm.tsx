@@ -476,7 +476,7 @@ export function ParticipationForm({
               loading={loading}
               fullWidth
               size="lg"
-              variant="accent"
+              variant="primary"
             >
               <CheckCircle2 className="h-5 w-5" />
               Confirmar Pagamento (Mock)
