@@ -5,9 +5,11 @@ import { cn } from '@/lib/utils'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 
-interface SectionProps extends React.HTMLAttributes<HTMLElement> {
+interface SectionProps {
+  children: React.ReactNode
   animate?: boolean
   delay?: number
+  className?: string
 }
 
 export function Section({ 
@@ -15,14 +17,13 @@ export function Section({
   animate = true,
   delay = 0,
   className,
-  ...props 
 }: SectionProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   if (!animate) {
     return (
-      <section className={className} {...props}>
+      <section className={className}>
         {children}
       </section>
     )
@@ -35,7 +36,6 @@ export function Section({
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.6, delay, ease: 'easeOut' }}
       className={className}
-      {...props}
     >
       {children}
     </motion.section>
