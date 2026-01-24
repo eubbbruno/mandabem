@@ -8,10 +8,9 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navigation = [
-    { name: '🎨 Desafios', href: '/' },
-    { name: '💡 Como Funciona', href: '#como-funciona' },
+    { name: '🎨 Desafios', href: '/#desafios' },
+    { name: '💡 Como Funciona', href: '/#como-funciona' },
     { name: '📊 Minhas Participações', href: '/meus-envios' },
-    { name: '⚙️ Admin', href: '/admin' },
   ]
 
   return (
@@ -47,7 +46,7 @@ export function Header() {
 
           {/* CTA Button ÉPICO */}
           <div className="hidden md:block">
-            <Link href="/">
+            <Link href="/#desafios">
               <button className="btn-epic text-base px-8 py-3">
                 🚀 Participar Agora
               </button>
@@ -83,7 +82,7 @@ export function Header() {
               </Link>
             ))}
             <div className="pt-4">
-              <Link href="/">
+              <Link href="/#desafios">
                 <button className="btn-epic w-full text-lg py-4">
                   🚀 Participar Agora
                 </button>

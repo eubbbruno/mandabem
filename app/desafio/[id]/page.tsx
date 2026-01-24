@@ -1,22 +1,17 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
-import { formatPrice, formatDate, isChallengeActive } from '@/lib/scoring'
-import { Button } from '@/components/Button'
+import { formatPrice, formatDate } from '@/lib/scoring'
 import Link from 'next/link'
 import { 
   MapPin, 
   Calendar, 
   Trophy, 
-  FileText, 
   Target, 
-  Users, 
   Sparkles,
   Clock,
-  CheckCircle2,
-  Flame,
   ArrowLeft,
-  TrendingUp,
-  Award
+  ArrowRight,
+  CheckCircle2
 } from 'lucide-react'
 
 interface PageProps {
@@ -46,276 +41,189 @@ export default async function ChallengePage({ params }: PageProps) {
     notFound()
   }
 
-  // Busca top 10 do ranking
-  const { data: topSubmissions }: { data: any } = await supabase
-    .from('submissions')
-    .select(`
-      *,
-      users (
-        name
-      )
-    `)
-    .eq('challenge_id', id)
-    .eq('status', 'evaluated')
-    .not('score_final', 'is', null)
-    .order('score_final', { ascending: false })
-    .limit(10)
-
-  const isActive = isChallengeActive(challenge.starts_at, challenge.ends_at)
+  const endDate = new Date(challenge.ends_at)
+  const now = new Date()
+  const daysLeft = Math.ceil((endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
   const rules = Array.isArray(challenge.rules) ? challenge.rules : []
 
   const statusConfig = {
-    active: { icon: Flame, label: 'Rolando agora', color: 'from-accent-500 to-accent-600' },
-    evaluating: { icon: Clock, label: 'Em avaliação', color: 'from-secondary-400 to-secondary-500' },
-    finished: { icon: CheckCircle2, label: 'Finalizado', color: 'from-gray-400 to-gray-500' }
+    active: { 
+      label: '🔥 ATIVO AGORA', 
+      gradient: 'from-green-500 to-emerald-600',
+      bg: 'from-green-50 to-emerald-50'
+    },
+    evaluating: { 
+      label: '⏳ Em Avaliação', 
+      gradient: 'from-yellow-500 to-orange-600',
+      bg: 'from-yellow-50 to-orange-50'
+    },
+    finished: { 
+      label: '✅ Finalizado', 
+      gradient: 'from-gray-400 to-gray-600',
+      bg: 'from-gray-50 to-gray-100'
+    }
   }
 
   const config = statusConfig[challenge.status as keyof typeof statusConfig] || statusConfig.active
-  const StatusIcon = config.icon
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50">
       {/* Back Button */}
       <div className="container pt-8">
-        <Link href="/" className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
-          <ArrowLeft className="h-4 w-4" />
-          <span className="font-medium">Voltar aos desafios</span>
+        <Link href="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border-2 border-gray-200 font-bold text-gray-700 hover:bg-gray-50 transition-all hover:scale-105">
+          <ArrowLeft className="h-5 w-5" />
+          <span>Voltar</span>
         </Link>
       </div>
 
-      {/* Hero Section */}
+      {/* Hero Section ÉPICO */}
       <section className="container py-12">
-        <div className="card p-8 md:p-12">
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Left Column */}
-            <div className="flex-1 space-y-6">
-              {/* Status Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-white to-gray-50 border-2 border-gray-200 shadow-soft">
-                <StatusIcon className="h-5 w-5 text-primary-600" />
-                <span className="font-semibold text-gray-700">{config.label}</span>
-              </div>
-
-              {/* Title */}
-              <div>
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                  {challenge.title}
-                </h1>
-                <p className="text-xl text-gray-600 leading-relaxed">
-                  {challenge.description}
-                </p>
-              </div>
-
-              {/* Theme Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-secondary-50 to-accent-50 border border-secondary-200">
-                <Sparkles className="h-4 w-4 text-secondary-600" />
-                <span className="font-semibold text-gray-700">{challenge.theme}</span>
-              </div>
-
-              {/* Location */}
-              <div className="flex items-start gap-3 p-4 rounded-xl bg-gray-50">
-                <MapPin className="h-5 w-5 text-primary-500 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-gray-900">{challenge.locations?.name}</div>
-                  <div className="text-sm text-gray-600">{challenge.locations?.address}</div>
-                  <div className="text-sm text-gray-500">{challenge.locations?.city}</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column - Prize Card */}
-            <div className="lg:w-80">
-              <div className="card p-8 bg-gradient-to-br from-primary-50 to-accent-50 border-2 border-primary-200 sticky top-24">
-                <div className="text-center space-y-6">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 shadow-strong">
-                    <Trophy className="h-8 w-8 text-white" />
-                  </div>
-                  
-                  <div>
-                    <div className="text-sm font-medium text-gray-600 mb-2">Prêmio Total</div>
-                    <div className="text-5xl font-bold gradient-text mb-4">
-                      {formatPrice(challenge.prize)}
-                    </div>
-                  </div>
-
-                  {/* Dates */}
-                  <div className="space-y-3 pt-6 border-t border-gray-200">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">Início</span>
-                      <span className="font-semibold text-gray-900">{formatDate(challenge.starts_at)}</span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">Término</span>
-                      <span className="font-semibold text-gray-900">{formatDate(challenge.ends_at)}</span>
-                    </div>
-                  </div>
-
-                  {/* CTA */}
-                  {challenge.status === 'active' && (
-                    <Link href={`/participar/${challenge.id}`} className="block">
-                      <Button size="lg" fullWidth className="shadow-strong">
-                        <Sparkles className="h-5 w-5" />
-                        Participar Agora
-                      </Button>
-                    </Link>
-                  )}
-                </div>
-              </div>
-            </div>
+        <div className="card-brutal bg-gradient-to-br from-white to-gray-50 p-8 md:p-16">
+          {/* Status Badge */}
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-black text-lg mb-8 shadow-neon-green">
+            <span>{config.label}</span>
           </div>
-        </div>
-      </section>
 
-      {/* Pricing Section */}
-      <section className="container pb-12">
-        <div className="card p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
-              <TrendingUp className="h-5 w-5 text-primary-600" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900">Preços por Tentativa</h2>
+          {/* Título ÉPICO */}
+          <h1 className="text-display-lg md:text-display-xl text-gradient-fire mb-6">
+            {challenge.title}
+          </h1>
+
+          {/* Tema */}
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-primary-100 to-secondary-100 border-2 border-primary-300 mb-8">
+            <Sparkles className="h-5 w-5 text-primary-600" />
+            <span className="text-xl font-black text-primary-700">{challenge.theme}</span>
           </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {[1, 2, 3, 4, 5].map((attempt) => {
-              const price = 7.00 + (2.10 * (attempt - 1))
-              return (
-                <div key={attempt} className="card p-4 text-center bg-gradient-to-br from-primary-50 to-secondary-50 border border-primary-200">
-                  <div className="text-xs font-medium text-gray-600 mb-2">{attempt}ª tentativa</div>
-                  <div className="text-2xl font-bold text-primary-600">{formatPrice(price)}</div>
-                </div>
-              )
-            })}
-          </div>
-          
-          <p className="text-sm text-gray-500 mt-4 text-center">
-            💡 Tentativas adicionais têm penalidade de 0,5 pontos no score (máximo 2,5 pontos)
+
+          {/* Descrição */}
+          <p className="text-2xl text-gray-700 font-bold leading-relaxed mb-12 max-w-3xl">
+            {challenge.description}
           </p>
-        </div>
-      </section>
 
-      {/* Rules Section */}
-      <section className="container pb-12">
-        <div className="card p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent-100">
-              <FileText className="h-5 w-5 text-accent-600" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900">Regras do Desafio</h2>
-          </div>
-          
-          <ul className="space-y-3">
-            {rules.map((rule: string, index: number) => (
-              <li key={index} className="flex items-start gap-3 p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center mt-0.5">
-                  <span className="text-white text-xs font-bold">{index + 1}</span>
-                </div>
-                <span className="text-gray-700 leading-relaxed">{rule}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Criteria Section */}
-      <section className="container pb-12">
-        <div className="card p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary-100">
-              <Target className="h-5 w-5 text-secondary-600" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900">Critérios de Avaliação</h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              { name: 'Estratégia', weight: '30%', color: 'from-primary-500 to-primary-600', desc: 'Planejamento e abordagem' },
-              { name: 'Engajamento', weight: '30%', color: 'from-secondary-500 to-secondary-600', desc: 'Capacidade de gerar interesse' },
-              { name: 'Adequação', weight: '20%', color: 'from-accent-500 to-accent-600', desc: 'Aderência ao tema' },
-              { name: 'Execução', weight: '10%', color: 'from-purple-500 to-purple-600', desc: 'Qualidade técnica' },
-              { name: 'Criatividade', weight: '5%', color: 'from-pink-500 to-pink-600', desc: 'Originalidade' },
-            ].map((criteria, index) => (
-              <div key={index} className="card p-6 hover:shadow-medium transition-shadow">
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-bold text-gray-900">{criteria.name}</h3>
-                  <span className={`px-3 py-1 rounded-lg text-sm font-bold text-white bg-gradient-to-r ${criteria.color}`}>
-                    {criteria.weight}
-                  </span>
-                </div>
-                <p className="text-sm text-gray-600">{criteria.desc}</p>
+          {/* Info Grid BRUTAL */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {/* Prêmio */}
+            <div className="card-brutal p-8 bg-gradient-to-br from-yellow-50 to-orange-50">
+              <div className="flex items-center gap-3 mb-3">
+                <Trophy className="h-8 w-8 text-yellow-600" />
+                <span className="text-lg font-bold text-gray-700">PRÊMIO</span>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Ranking Section */}
-      <section className="container pb-16">
-        <div className="card p-8">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-yellow-100">
-                <Award className="h-5 w-5 text-yellow-600" />
+              <div className="text-5xl font-black text-gradient">
+                {formatPrice(challenge.prize)}
               </div>
-              <h2 className="text-2xl font-bold text-gray-900">Top 10 Ranking</h2>
             </div>
-            <Link href={`/ranking/${challenge.id}`}>
-              <Button variant="outline" size="sm">
-                Ver ranking completo
-              </Button>
-            </Link>
-          </div>
 
-          {topSubmissions && topSubmissions.length > 0 ? (
-            <div className="space-y-3">
-              {topSubmissions.map((submission: any, index: number) => {
-                const medals = ['🥇', '🥈', '🥉']
-                const isTop3 = index < 3
-                
-                return (
-                  <div 
-                    key={submission.id}
-                    className={`
-                      flex items-center justify-between p-4 rounded-xl transition-all
-                      ${isTop3 
-                        ? 'bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-300 shadow-md' 
-                        : 'bg-gray-50 hover:bg-gray-100'
-                      }
-                    `}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className={`
-                        w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg
-                        ${index === 0 ? 'bg-yellow-400 text-yellow-900 shadow-md' : ''}
-                        ${index === 1 ? 'bg-gray-300 text-gray-700 shadow-md' : ''}
-                        ${index === 2 ? 'bg-orange-400 text-orange-900 shadow-md' : ''}
-                        ${index > 2 ? 'bg-gray-200 text-gray-600' : ''}
-                      `}>
-                        {isTop3 ? medals[index] : index + 1}
-                      </div>
-                      <div>
-                        <p className="font-bold text-gray-900">{submission.users?.name}</p>
-                        <p className="text-xs text-gray-500">
-                          {submission.attempt_number}ª tentativa
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className={`text-3xl font-bold ${isTop3 ? 'gradient-text' : 'text-primary-600'}`}>
-                        {submission.score_final?.toFixed(2)}
-                      </p>
-                      <p className="text-xs text-gray-500">pontos</p>
-                    </div>
+            {/* Local */}
+            <div className="card-brutal p-8 bg-gradient-to-br from-blue-50 to-cyan-50">
+              <div className="flex items-center gap-3 mb-3">
+                <MapPin className="h-8 w-8 text-blue-600" />
+                <span className="text-lg font-bold text-gray-700">LOCAL</span>
+              </div>
+              <div className="text-2xl font-black text-gray-900">
+                {challenge.locations?.name}
+              </div>
+              <div className="text-lg font-bold text-gray-600">
+                {challenge.locations?.city}
+              </div>
+            </div>
+
+            {/* Prazo */}
+            <div className="card-brutal p-8 bg-gradient-to-br from-purple-50 to-pink-50">
+              <div className="flex items-center gap-3 mb-3">
+                <Clock className="h-8 w-8 text-purple-600" />
+                <span className="text-lg font-bold text-gray-700">PRAZO</span>
+              </div>
+              {daysLeft > 0 ? (
+                <>
+                  <div className="text-5xl font-black text-gradient">
+                    {daysLeft}
                   </div>
-                )
-              })}
+                  <div className="text-lg font-bold text-gray-600">
+                    {daysLeft === 1 ? 'dia' : 'dias'} restantes
+                  </div>
+                </>
+              ) : (
+                <div className="text-2xl font-black text-gray-600">
+                  Encerrado
+                </div>
+              )}
             </div>
-          ) : (
-            <div className="text-center py-12 text-gray-500">
-              <Users className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-              <p className="text-lg font-medium">Ainda não há participantes avaliados</p>
-              <p className="text-sm">Seja o primeiro a participar!</p>
-            </div>
+          </div>
+
+          {/* CTA ÉPICO */}
+          {challenge.status === 'active' && daysLeft > 0 && (
+            <Link href={`/participar/${id}`} className="inline-block">
+              <button className="btn-epic text-2xl px-16 py-6 flex items-center gap-3 group">
+                <span>🎨 PARTICIPAR AGORA</span>
+                <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
+              </button>
+            </Link>
           )}
+        </div>
+      </section>
+
+      {/* Regras - ESTILO BRUTAL */}
+      {rules.length > 0 && (
+        <section className="container pb-12">
+          <div className="card-brutal bg-white p-8 md:p-12">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
+                <Target className="h-8 w-8 text-white" />
+              </div>
+              <h2 className="text-4xl font-black text-gray-900">
+                Regras do Desafio
+              </h2>
+            </div>
+
+            <div className="space-y-4">
+              {rules.map((rule: string, index: number) => (
+                <div key={index} className="flex items-start gap-4 p-6 rounded-xl bg-gradient-to-r from-gray-50 to-white border-l-4 border-primary-500">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white font-black">
+                    {index + 1}
+                  </div>
+                  <p className="text-lg font-bold text-gray-700 pt-1">
+                    {rule}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Como Participar - SIMPLES E CLARO */}
+      <section className="container pb-12">
+        <div className="card-brutal bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 p-8 md:p-12 text-white">
+          <div className="text-center space-y-8">
+            <div className="text-7xl animate-bounce-slow">🚀</div>
+            <h2 className="text-4xl md:text-5xl font-black">
+              Como Participar?
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/20">
+                <div className="text-5xl mb-4">📝</div>
+                <div className="text-2xl font-black mb-2">1. Crie</div>
+                <p className="font-bold">Envie foto ou texto criativo</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/20">
+                <div className="text-5xl mb-4">💳</div>
+                <div className="text-2xl font-black mb-2">2. Pague</div>
+                <p className="font-bold">R$ 7 via PIX (primeira tentativa)</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border-2 border-white/20">
+                <div className="text-5xl mb-4">🏆</div>
+                <div className="text-2xl font-black mb-2">3. Ganhe</div>
+                <p className="font-bold">Jurados avaliam e premiam!</p>
+              </div>
+            </div>
+            {challenge.status === 'active' && daysLeft > 0 && (
+              <Link href={`/participar/${id}`}>
+                <button className="card-brutal px-12 py-6 text-2xl font-black bg-white text-gray-900 hover:bg-yellow-300 transition-all hover:scale-110">
+                  🎨 COMEÇAR AGORA
+                </button>
+              </Link>
+            )}
+          </div>
         </div>
       </section>
     </div>

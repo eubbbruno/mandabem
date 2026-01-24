@@ -66,12 +66,12 @@ export default async function Home({ searchParams }: PageProps) {
 
             {/* CTA Buttons ÉPICOS */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
-              <button className="btn-epic text-xl px-12 py-6">
+              <a href="#desafios" className="btn-epic text-xl px-12 py-6">
                 🚀 Ver Desafios
-              </button>
-              <button className="card-brutal px-12 py-6 text-xl font-bold hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-500 hover:text-white transition-all">
+              </a>
+              <a href="#como-funciona" className="card-brutal px-12 py-6 text-xl font-bold hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-500 hover:text-white transition-all">
                 📖 Como Funciona
-              </button>
+              </a>
             </div>
 
             {/* Stats Cards BRUTAIS */}
@@ -97,7 +97,7 @@ export default async function Home({ searchParams }: PageProps) {
       </section>
 
       {/* Como Funciona - ESTILO BRUTAL */}
-      <section className="section bg-white relative">
+      <section id="como-funciona" className="section bg-white relative">
         <div className="container">
           <div className="text-center mb-20">
             <div className="inline-block mb-6">
@@ -163,7 +163,7 @@ export default async function Home({ searchParams }: PageProps) {
 
       {/* Desafios Ativos - NEON STYLE */}
       {!error && (
-        <section className="section bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white relative overflow-hidden">
+        <section id="desafios" className="section bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white relative overflow-hidden">
           {/* Neon Glow Background */}
           <div className="absolute inset-0 opacity-30">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-500 rounded-full blur-[100px] animate-pulse-slow" />
@@ -288,9 +288,9 @@ export default async function Home({ searchParams }: PageProps) {
             <p className="text-3xl text-white font-bold">
               Escolha um desafio e mostre do que você é capaz! 💪
             </p>
-            <button className="card-brutal px-16 py-8 text-2xl font-black bg-white hover:bg-sunshine-300 transition-all hover:scale-110">
+            <a href="#desafios" className="inline-block card-brutal px-16 py-8 text-2xl font-black bg-white hover:bg-sunshine-300 transition-all hover:scale-110">
               🎨 VER DESAFIOS AGORA
-            </button>
+            </a>
           </div>
         </div>
       </section>
