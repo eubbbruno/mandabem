@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --font-inter: 'Inter', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-neutral-900 antialiased;
+  font-family: var(--font-inter);
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold tracking-tight text-neutral-900;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-neutral-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-400;
+}
+
+@layer components {
+  /* Container */
+  .container {
+    @apply max-w-7xl mx-auto px-6 lg:px-8;
+  }
+
+  /* Card minimalista */
+  .card {
+    @apply bg-white rounded-2xl border border-neutral-200 transition-all duration-200;
+  }
+
+  .card-hover {
+    @apply hover:shadow-lg hover:border-neutral-300;
+  }
+
+  /* Button base */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-neutral-900 text-white hover:bg-neutral-800;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-neutral-900 border border-neutral-300 hover:bg-neutral-50;
+  }
+
+  /* Badge minimalista */
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply bg-primary-50 text-primary-700 border border-primary-200;
+  }
+
+  .badge-neutral {
+    @apply bg-neutral-100 text-neutral-700 border border-neutral-200;
+  }
+
+  /* Input minimalista */
+  .input {
+    @apply w-full px-4 py-3 rounded-xl border border-neutral-300 bg-white text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent transition-all;
+  }
+
+  /* Section spacing */
+  .section {
+    @apply py-16 lg:py-24;
+  }
+}
+
+@layer utilities {
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Fade in animation */
+  .animate-in {
+    animation: fade-in 0.5s ease-out;
+  }
+
+  /* Focus visible */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2;
+  }
+}
