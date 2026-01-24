@@ -8,37 +8,48 @@ interface PageProps {
 
 export default async function Home({ searchParams }: PageProps) {
   const params = await searchParams
-  const supabase = await createClient()
+  
+  let uniqueCities: string[] = []
+  let challenges: any[] = []
+  let error = null
 
-  // Busca cidades disponíveis
-  const { data: cities }: { data: any } = await supabase
-    .from('locations')
-    .select('city')
-    .eq('active', true)
-    .order('city')
+  try {
+    const supabase = await createClient()
 
-  const uniqueCities = [...new Set(cities?.map((l: any) => l.city) || [])] as string[]
+    // Busca cidades disponíveis
+    const { data: cities } = await supabase
+      .from('locations')
+      .select('city')
+      .eq('active', true)
+      .order('city')
 
-  // Busca desafios ativos
-  let query = supabase
-    .from('challenges')
-    .select(`
-      *,
-      locations (
-        id,
-        name,
-        city
-      )
-    `)
-    .in('status', ['active', 'evaluating', 'finished'])
-    .order('ends_at', { ascending: false })
+    uniqueCities = [...new Set(cities?.map((l: any) => l.city) || [])] as string[]
 
-  // Filtro por cidade se selecionado
-  if (params.city && params.city !== 'all') {
-    query = query.eq('locations.city', params.city)
+    // Busca desafios ativos
+    let query = supabase
+      .from('challenges')
+      .select(`
+        *,
+        locations (
+          id,
+          name,
+          city
+        )
+      `)
+      .in('status', ['active', 'evaluating', 'finished'])
+      .order('ends_at', { ascending: false })
+
+    // Filtro por cidade se selecionado
+    if (params.city && params.city !== 'all') {
+      query = query.eq('locations.city', params.city)
+    }
+
+    const { data } = await query
+    challenges = data || []
+  } catch (e) {
+    error = e
+    console.error('Erro ao buscar dados:', e)
   }
-
-  const { data: challenges }: { data: any } = await query
 
   return (
     <div className="min-h-screen">
@@ -133,45 +144,47 @@ export default async function Home({ searchParams }: PageProps) {
       </section>
 
       {/* Challenges Section */}
-      <section className="section bg-neutral-50">
-        <div className="container">
-          {/* Filtro de Cidade */}
-          <div className="mb-12">
-            <CityFilter cities={uniqueCities} selectedCity={params.city} />
-          </div>
+      {!error && (
+        <section className="section bg-neutral-50">
+          <div className="container">
+            {/* Filtro de Cidade */}
+            {uniqueCities.length > 0 && (
+              <div className="mb-12">
+                <CityFilter cities={uniqueCities} selectedCity={params.city} />
+              </div>
+            )}
 
-          {/* Lista de Desafios */}
-          {challenges && challenges.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {challenges.map((challenge: any) => (
-                <ChallengeCard
-                  key={challenge.id}
-                  id={challenge.id}
-                  title={challenge.title}
-                  theme={challenge.theme}
-                  prize={challenge.prize}
-                  locationName={challenge.locations?.name || 'Local'}
-                  city={challenge.locations?.city || ''}
-                  endsAt={challenge.ends_at}
-                  status={challenge.status}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20">
-              <div className="text-6xl mb-6">🎨</div>
-              <h3 className="text-2xl font-bold text-neutral-900 mb-2">
-                Nenhum desafio disponível
-              </h3>
-              <p className="text-neutral-600 max-w-md mx-auto">
-                {params.city && params.city !== 'all' 
-                  ? 'Tente selecionar outra cidade ou aguarde novos desafios.'
-                  : 'Aguarde novos desafios em breve!'}
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
+            {/* Lista de Desafios */}
+            {challenges && challenges.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {challenges.map((challenge: any) => (
+                  <ChallengeCard
+                    key={challenge.id}
+                    id={challenge.id}
+                    title={challenge.title}
+                    theme={challenge.theme}
+                    prize={challenge.prize}
+                    locationName={challenge.locations?.name || 'Local'}
+                    city={challenge.locations?.city || ''}
+                    endsAt={challenge.ends_at}
+                    status={challenge.status}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20">
+                <div className="text-6xl mb-6">🎨</div>
+                <h3 className="text-2xl font-bold text-neutral-900 mb-2">
+                  Nenhum desafio disponível
+                </h3>
+                <p className="text-neutral-600 max-w-md mx-auto">
+                  Configure o Supabase para ver os desafios ou aguarde novos desafios em breve!
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Stats Section */}
       <section className="section">
