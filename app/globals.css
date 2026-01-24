@@ -2,10 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root {
   --font-inter: 'Inter', sans-serif;
+  --font-space: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 * {
@@ -19,32 +21,34 @@ html {
 }
 
 body {
-  @apply bg-white text-neutral-900 antialiased;
+  @apply bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50 text-gray-900 antialiased;
   font-family: var(--font-inter);
-  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
 }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-  @apply font-bold tracking-tight text-neutral-900;
+  font-family: var(--font-space);
+  @apply font-black tracking-tight;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-neutral-100;
+  @apply bg-gradient-to-b from-primary-100 to-secondary-100;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-neutral-300 rounded-full;
+  @apply bg-gradient-to-b from-primary-500 to-secondary-500 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-neutral-400;
+  @apply from-primary-600 to-secondary-600;
 }
 
 @layer components {
@@ -53,49 +57,73 @@ h1, h2, h3, h4, h5, h6 {
     @apply max-w-7xl mx-auto px-6 lg:px-8;
   }
 
-  /* Card minimalista */
-  .card {
-    @apply bg-white rounded-2xl border border-neutral-200 transition-all duration-200;
+  /* Card BRUTAL */
+  .card-brutal {
+    @apply bg-white rounded-2xl border-4 border-black shadow-brutal transition-all duration-300;
   }
 
-  .card-hover {
-    @apply hover:shadow-lg hover:border-neutral-300;
+  .card-brutal:hover {
+    @apply translate-x-1 translate-y-1 shadow-brutal-sm;
   }
 
-  /* Button base */
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200;
+  /* Card NEON */
+  .card-neon {
+    @apply bg-gradient-to-br from-primary-500 to-secondary-500 rounded-3xl p-1 shadow-neon;
   }
 
-  .btn-primary {
-    @apply bg-neutral-900 text-white hover:bg-neutral-800;
+  .card-neon-inner {
+    @apply bg-white rounded-[22px] p-6;
   }
 
-  .btn-secondary {
-    @apply bg-white text-neutral-900 border border-neutral-300 hover:bg-neutral-50;
+  /* Button ÉPICO */
+  .btn-epic {
+    @apply relative px-8 py-4 font-bold text-white rounded-2xl overflow-hidden transition-all duration-300 transform hover:scale-105;
+    background: linear-gradient(135deg, #f97316 0%, #d946ef 100%);
+    box-shadow: 0 10px 30px rgba(249, 115, 22, 0.4);
   }
 
-  /* Badge minimalista */
-  .badge {
-    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium;
+  .btn-epic::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 transition-opacity duration-500;
+    transform: translateX(-100%);
   }
 
-  .badge-primary {
-    @apply bg-primary-50 text-primary-700 border border-primary-200;
+  .btn-epic:hover::before {
+    @apply opacity-30;
+    animation: shimmer 1.5s infinite;
   }
 
-  .badge-neutral {
-    @apply bg-neutral-100 text-neutral-700 border border-neutral-200;
+  /* Text Gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500;
+    background-size: 200% auto;
+    animation: gradient 3s linear infinite;
   }
 
-  /* Input minimalista */
-  .input {
-    @apply w-full px-4 py-3 rounded-xl border border-neutral-300 bg-white text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent transition-all;
+  .text-gradient-fire {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #ff0080 0%, #ff8c00 50%, #ffed00 100%);
+    background-size: 200% auto;
+    animation: gradient 3s linear infinite;
+  }
+
+  /* Blob Shape */
+  .blob {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    animation: blob 8s ease-in-out infinite;
+  }
+
+  /* Badge NEON */
+  .badge-neon {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm;
+    background: linear-gradient(135deg, #f97316 0%, #d946ef 100%);
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
+    animation: glow 2s ease-in-out infinite;
   }
 
   /* Section spacing */
   .section {
-    @apply py-16 lg:py-24;
+    @apply py-20 lg:py-32;
   }
 }
 
@@ -105,13 +133,51 @@ h1, h2, h3, h4, h5, h6 {
     text-wrap: balance;
   }
 
-  /* Fade in animation */
-  .animate-in {
-    animation: fade-in 0.5s ease-out;
+  /* Animations */
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
   }
 
-  /* Focus visible */
-  .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2;
+  @keyframes blob {
+    0%, 100% {
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    }
+    25% {
+      border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
+    }
+    50% {
+      border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
+    }
+    75% {
+      border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
+    }
+  }
+
+  /* Gradient animation */
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Glow animation */
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(249, 115, 22, 0.5), 0 0 40px rgba(249, 115, 22, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(249, 115, 22, 0.8), 0 0 60px rgba(249, 115, 22, 0.5);
+    }
   }
 }

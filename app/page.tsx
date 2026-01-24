@@ -15,166 +15,177 @@ export default async function Home({ searchParams }: PageProps) {
 
   try {
     const supabase = await createClient()
-
-    // Busca cidades disponíveis
-    const { data: cities } = await supabase
-      .from('locations')
-      .select('city')
-      .eq('active', true)
-      .order('city')
-
+    const { data: cities } = await supabase.from('locations').select('city').eq('active', true).order('city')
     uniqueCities = [...new Set(cities?.map((l: any) => l.city) || [])] as string[]
 
-    // Busca desafios ativos
-    let query = supabase
-      .from('challenges')
-      .select(`
-        *,
-        locations (
-          id,
-          name,
-          city
-        )
-      `)
-      .in('status', ['active', 'evaluating', 'finished'])
-      .order('ends_at', { ascending: false })
-
-    // Filtro por cidade se selecionado
-    if (params.city && params.city !== 'all') {
-      query = query.eq('locations.city', params.city)
-    }
-
+    let query = supabase.from('challenges').select(`*, locations (id, name, city)`).in('status', ['active', 'evaluating', 'finished']).order('ends_at', { ascending: false })
+    if (params.city && params.city !== 'all') query = query.eq('locations.city', params.city)
+    
     const { data } = await query
     challenges = data || []
   } catch (e) {
     error = e
-    console.error('Erro ao buscar dados:', e)
   }
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="section bg-neutral-50">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-neutral-200 text-sm font-medium text-neutral-700">
-              ✨ Concurso Cultural 100% Legal
+    <div className="min-h-screen overflow-hidden">
+      {/* Hero Section ÉPICO */}
+      <section className="relative section pt-32 pb-20">
+        {/* Background Blobs Animados */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-primary-400 to-secondary-400 opacity-30 blur-3xl blob animate-float" />
+          <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-gradient-to-br from-accent-400 to-electric-400 opacity-30 blur-3xl blob animate-float" style={{ animationDelay: '1s' }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-secondary-300 to-sunshine-300 opacity-20 blur-3xl blob animate-float" style={{ animationDelay: '2s' }} />
+        </div>
+
+        <div className="container relative z-10">
+          <div className="max-w-5xl mx-auto text-center space-y-10">
+            {/* Badge NEON */}
+            <div className="inline-block animate-bounce-slow">
+              <div className="badge-neon text-white">
+                <span className="text-2xl">✨</span>
+                <span>Concurso Cultural 100% Legal</span>
+              </div>
             </div>
 
-            {/* Headline */}
-            <h1 className="text-display-xl md:text-display-2xl text-neutral-900">
-              Sua <span className="italic">criatividade</span> vale{' '}
-              <span className="italic">prêmio</span>
+            {/* Headline EXPLOSIVO */}
+            <h1 className="text-display-2xl md:text-[7rem] leading-none">
+              <span className="block text-gradient-fire animate-pulse-slow">
+                SUA CRIATIVIDADE
+              </span>
+              <span className="block text-gray-900 mt-4">
+                VALE <span className="text-gradient">PRÊMIO</span>
+              </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
-              Participe de desafios criativos em bares e botecos. 
-              Mostre seu talento, seja avaliado por jurados e ganhe prêmios reais.
+            <p className="text-2xl md:text-3xl text-gray-700 font-bold max-w-3xl mx-auto">
+              Desafios criativos em bares e botecos. 
+              <span className="text-gradient"> Mostre seu talento</span> e ganhe prêmios reais! 💰
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <button className="btn btn-primary">
-                Ver Desafios
+            {/* CTA Buttons ÉPICOS */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
+              <button className="btn-epic text-xl px-12 py-6">
+                🚀 Ver Desafios
               </button>
-              <button className="btn btn-secondary">
-                Como Funciona
+              <button className="card-brutal px-12 py-6 text-xl font-bold hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-500 hover:text-white transition-all">
+                📖 Como Funciona
               </button>
             </div>
 
-            {/* Stats */}
-            <div className="pt-12 border-t border-neutral-200">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-neutral-900 mb-2">R$ 7</div>
-                  <div className="text-sm text-neutral-600">Primeira tentativa</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-neutral-900 mb-2">100%</div>
-                  <div className="text-sm text-neutral-600">Avaliação objetiva</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-neutral-900 mb-2">Legal</div>
-                  <div className="text-sm text-neutral-600">Concurso cultural</div>
-                </div>
+            {/* Stats Cards BRUTAIS */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16">
+              <div className="card-brutal p-8 bg-gradient-to-br from-primary-50 to-primary-100">
+                <div className="text-6xl font-black text-gradient mb-2">R$ 7</div>
+                <div className="text-lg font-bold text-gray-700">Primeira tentativa</div>
+              </div>
+              <div className="card-brutal p-8 bg-gradient-to-br from-secondary-50 to-secondary-100">
+                <div className="text-6xl font-black text-gradient mb-2">100%</div>
+                <div className="text-lg font-bold text-gray-700">Avaliação objetiva</div>
+              </div>
+              <div className="card-brutal p-8 bg-gradient-to-br from-accent-50 to-accent-100">
+                <div className="text-6xl font-black text-gradient mb-2">LEGAL</div>
+                <div className="text-lg font-bold text-gray-700">Concurso cultural</div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Decorative Elements */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
       </section>
 
-      {/* Como Funciona */}
-      <section className="section">
+      {/* Como Funciona - ESTILO BRUTAL */}
+      <section className="section bg-white relative">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-display-md text-neutral-900 mb-4">
-              Como funciona
+          <div className="text-center mb-20">
+            <div className="inline-block mb-6">
+              <span className="text-6xl">🎯</span>
+            </div>
+            <h2 className="text-display-lg text-gradient mb-6">
+              Como funciona?
             </h2>
-            <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-              Simples, rápido e transparente. Do desafio ao prêmio em 4 passos.
+            <p className="text-2xl text-gray-600 font-bold max-w-2xl mx-auto">
+              Simples, rápido e transparente
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
                 number: '01',
+                emoji: '🎨',
                 title: 'Escolha um desafio',
-                description: 'Veja os desafios ativos nos bares e botecos da sua cidade.',
+                description: 'Veja os desafios ativos nos bares da sua cidade',
+                color: 'from-primary-500 to-orange-600',
               },
               {
                 number: '02',
+                emoji: '💡',
                 title: 'Crie sua resposta',
-                description: 'Envie uma foto ou texto criativo seguindo as regras do desafio.',
+                description: 'Envie foto ou texto criativo seguindo as regras',
+                color: 'from-secondary-500 to-pink-600',
               },
               {
                 number: '03',
+                emoji: '💳',
                 title: 'Pague via PIX',
-                description: 'R$ 7 na primeira tentativa. Preço aumenta progressivamente.',
+                description: 'R$ 7 na primeira. Preço aumenta progressivamente',
+                color: 'from-accent-500 to-green-600',
               },
               {
                 number: '04',
+                emoji: '🏆',
                 title: 'Ganhe prêmios',
-                description: 'Jurados avaliam objetivamente. Os melhores ganham o prêmio!',
+                description: 'Jurados avaliam. Os melhores ganham!',
+                color: 'from-electric-500 to-blue-600',
               },
             ].map((step, index) => (
-              <div key={index} className="card card-hover p-8 text-center">
-                <div className="text-5xl font-bold text-neutral-200 mb-6">{step.number}</div>
-                <h3 className="text-base font-bold text-neutral-900 mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-sm text-neutral-600 leading-relaxed">
-                  {step.description}
-                </p>
+              <div key={index} className="group">
+                <div className="card-brutal p-8 h-full bg-white hover:bg-gradient-to-br hover:from-white hover:to-gray-50 transition-all">
+                  <div className="text-7xl mb-4 group-hover:animate-bounce">{step.emoji}</div>
+                  <div className={`text-5xl font-black bg-gradient-to-r ${step.color} bg-clip-text text-transparent mb-4`}>
+                    {step.number}
+                  </div>
+                  <h3 className="text-xl font-black text-gray-900 mb-3">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-600 font-medium leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Desafios Ativos */}
+      {/* Desafios Ativos - NEON STYLE */}
       {!error && (
-        <section className="section bg-neutral-50">
-          <div className="container">
-            <div className="text-center mb-12">
-              <h2 className="text-display-md text-neutral-900 mb-4">
-                Desafios ativos
+        <section className="section bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white relative overflow-hidden">
+          {/* Neon Glow Background */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-500 rounded-full blur-[100px] animate-pulse-slow" />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary-500 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '1s' }} />
+          </div>
+
+          <div className="container relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-display-lg text-white mb-6">
+                Desafios <span className="text-gradient-fire">Ativos</span>
               </h2>
-              <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-                Escolha um desafio e mostre sua criatividade
+              <p className="text-2xl text-gray-300 font-bold">
+                Escolha um e mostre sua criatividade 🔥
               </p>
             </div>
 
-            {/* Filtro de Cidade */}
             {uniqueCities.length > 0 && (
-              <div className="mb-12">
+              <div className="mb-12 flex justify-center">
                 <CityFilter cities={uniqueCities} selectedCity={params.city} />
               </div>
             )}
 
-            {/* Lista de Desafios */}
             {challenges && challenges.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {challenges.map((challenge: any) => (
@@ -193,14 +204,12 @@ export default async function Home({ searchParams }: PageProps) {
               </div>
             ) : (
               <div className="text-center py-20">
-                <div className="text-6xl mb-6">🎨</div>
-                <h3 className="text-2xl font-bold text-neutral-900 mb-2">
-                  Nenhum desafio disponível no momento
+                <div className="text-9xl mb-8 animate-bounce-slow">🎨</div>
+                <h3 className="text-4xl font-black text-white mb-4">
+                  Nenhum desafio disponível
                 </h3>
-                <p className="text-neutral-600 max-w-md mx-auto">
-                  {params.city && params.city !== 'all' 
-                    ? 'Tente selecionar outra cidade ou aguarde novos desafios.'
-                    : 'Novos desafios serão publicados em breve!'}
+                <p className="text-xl text-gray-300 max-w-md mx-auto">
+                  Novos desafios épicos chegando em breve! 🚀
                 </p>
               </div>
             )}
@@ -208,95 +217,79 @@ export default async function Home({ searchParams }: PageProps) {
         </section>
       )}
 
-      {/* Por que participar */}
-      <section className="section">
+      {/* Por que participar - CARDS NEON */}
+      <section className="section bg-white">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-display-md text-neutral-900 mb-6">
-                Por que participar?
-              </h2>
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-neutral-900 text-white flex items-center justify-center font-bold">
-                    ✓
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-neutral-900 mb-1">Prêmios reais em dinheiro</h3>
-                    <p className="text-sm text-neutral-600">Ganhe prêmios que valem a pena pelo seu talento criativo.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-neutral-900 text-white flex items-center justify-center font-bold">
-                    ✓
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-neutral-900 mb-1">Avaliação objetiva e transparente</h3>
-                    <p className="text-sm text-neutral-600">Critérios claros de avaliação. Sem sorteio, sem azar.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-neutral-900 text-white flex items-center justify-center font-bold">
-                    ✓
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-neutral-900 mb-1">100% legal e regulamentado</h3>
-                    <p className="text-sm text-neutral-600">Concurso cultural com regulamento próprio e critérios objetivos.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-neutral-900 text-white flex items-center justify-center font-bold">
-                    ✓
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-neutral-900 mb-1">Preço justo e progressivo</h3>
-                    <p className="text-sm text-neutral-600">R$ 7 na primeira tentativa. Você decide se quer tentar novamente.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="card p-8">
-              <div className="space-y-6">
-                <div>
-                  <div className="text-4xl font-bold text-neutral-900 mb-1">R$ 7,00</div>
-                  <div className="text-sm text-neutral-600 mb-6">Primeira tentativa</div>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    { label: '1ª tentativa', value: 'R$ 7,00' },
-                    { label: '2ª tentativa', value: 'R$ 9,10' },
-                    { label: '3ª tentativa', value: 'R$ 11,20' },
-                    { label: '4ª tentativa', value: 'R$ 13,30' },
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-neutral-50">
-                      <span className="text-sm font-medium text-neutral-600">{item.label}</span>
-                      <span className="text-sm font-bold text-neutral-900">{item.value}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="pt-4 border-t border-neutral-200">
-                  <p className="text-xs text-neutral-500">
-                    * Preço aumenta R$ 2,10 por tentativa no mesmo desafio
+          <div className="text-center mb-20">
+            <h2 className="text-display-lg text-gradient mb-6">
+              Por que participar?
+            </h2>
+            <p className="text-2xl text-gray-600 font-bold">
+              4 motivos para você mandar bem agora! 💪
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {[
+              {
+                emoji: '💰',
+                title: 'Prêmios reais em dinheiro',
+                description: 'Ganhe prêmios que valem a pena pelo seu talento criativo',
+                gradient: 'from-primary-500 to-orange-600',
+              },
+              {
+                emoji: '📊',
+                title: 'Avaliação objetiva',
+                description: 'Critérios claros. Sem sorteio, sem azar. Só talento!',
+                gradient: 'from-secondary-500 to-pink-600',
+              },
+              {
+                emoji: '✅',
+                title: '100% legal',
+                description: 'Concurso cultural regulamentado com critérios objetivos',
+                gradient: 'from-accent-500 to-green-600',
+              },
+              {
+                emoji: '💳',
+                title: 'Preço justo',
+                description: 'R$ 7 na primeira. Você decide se quer tentar de novo',
+                gradient: 'from-electric-500 to-blue-600',
+              },
+            ].map((item, index) => (
+              <div key={index} className="card-neon group hover:scale-105 transition-transform">
+                <div className="card-neon-inner">
+                  <div className="text-6xl mb-4 group-hover:animate-bounce">{item.emoji}</div>
+                  <h3 className={`text-2xl font-black mb-3 bg-gradient-to-r ${item.gradient} bg-clip-text text-transparent`}>
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-600 font-medium text-lg">
+                    {item.description}
                   </p>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Final */}
-      <section className="section bg-neutral-900 text-white">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center space-y-8">
-            <h2 className="text-display-md">
-              Pronto para mandar bem?
+      {/* CTA Final EXPLOSIVO */}
+      <section className="section relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500" />
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00em0wLTIwYzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHptMjAgMjBjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00eiIvPjwvZz48L2c+PC9zdmc+')] animate-spin-slow" />
+        </div>
+        
+        <div className="container relative z-10">
+          <div className="max-w-4xl mx-auto text-center space-y-10">
+            <div className="text-8xl animate-bounce-slow">🚀</div>
+            <h2 className="text-display-xl text-white drop-shadow-2xl">
+              Pronto para <span className="text-sunshine-300">MANDAR BEM</span>?
             </h2>
-            <p className="text-xl text-neutral-300">
-              Escolha um desafio e mostre do que você é capaz
+            <p className="text-3xl text-white font-bold">
+              Escolha um desafio e mostre do que você é capaz! 💪
             </p>
-            <button className="btn bg-white text-neutral-900 hover:bg-neutral-100">
-              Ver Desafios Disponíveis
+            <button className="card-brutal px-16 py-8 text-2xl font-black bg-white hover:bg-sunshine-300 transition-all hover:scale-110">
+              🎨 VER DESAFIOS AGORA
             </button>
           </div>
         </div>
