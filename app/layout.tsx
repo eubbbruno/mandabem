@@ -11,11 +11,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Orga - Financial Planning Made Simple",
-  description: "Ensuring your financial plan stays organized with data-driven insights and exceptional services.",
-  keywords: ["financial planning", "stocks", "bonds", "banking", "investment"],
-  authors: [{ name: "Orga" }],
-  creator: "Orga",
+  title: "MandaBem - Criatividade que vale prêmio por R$7",
+  description: "Participe de desafios criativos em bares e botecos. Concurso cultural com avaliação objetiva. Primeira tentativa por apenas R$7!",
+  keywords: ["concurso cultural", "desafios criativos", "prêmios", "competição", "criatividade", "bares", "botecos"],
+  authors: [{ name: "MandaBem" }],
+  creator: "MandaBem",
 };
 
 export default function RootLayout({
@@ -36,30 +36,30 @@ export default function RootLayout({
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
               {/* Brand */}
               <div className="md:col-span-2">
-                <div className="text-2xl font-bold text-neutral-900 mb-4">Orga.</div>
+                <div className="text-2xl font-bold text-neutral-900 mb-4">MandaBem</div>
                 <p className="text-neutral-600 mb-6 max-w-md">
-                  Ensuring your financial plan stays organized with exceptional services.
+                  Criatividade que vale prêmio. Participe de desafios criativos e ganhe prêmios reais.
                 </p>
               </div>
 
               {/* Links */}
               <div>
-                <h3 className="font-bold text-neutral-900 mb-4 text-sm">Solution</h3>
+                <h3 className="font-bold text-neutral-900 mb-4 text-sm">Plataforma</h3>
                 <ul className="space-y-3">
-                  <li><a href="#" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Loan & Mortgage</a></li>
-                  <li><a href="#" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Negotiation</a></li>
-                  <li><a href="#" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Taxes</a></li>
-                  <li><a href="#" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Support</a></li>
+                  <li><a href="/" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Desafios</a></li>
+                  <li><a href="#como-funciona" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Como Funciona</a></li>
+                  <li><a href="/meus-envios" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Minhas Participações</a></li>
+                  <li><a href="/admin" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Admin</a></li>
                 </ul>
               </div>
 
               <div>
-                <h3 className="font-bold text-neutral-900 mb-4 text-sm">Resources</h3>
+                <h3 className="font-bold text-neutral-900 mb-4 text-sm">Legal</h3>
                 <ul className="space-y-3">
-                  <li><a href="#" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Blog</a></li>
-                  <li><a href="#" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Contact</a></li>
-                  <li><a href="#" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Careers</a></li>
-                  <li><a href="#" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">About</a></li>
+                  <li><a href="#" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Regulamento</a></li>
+                  <li><a href="#" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Termos de Uso</a></li>
+                  <li><a href="#" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Privacidade</a></li>
+                  <li><a href="#" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Contato</a></li>
                 </ul>
               </div>
             </div>
@@ -67,12 +67,11 @@ export default function RootLayout({
             {/* Bottom */}
             <div className="pt-8 border-t border-neutral-200 flex flex-col md:flex-row items-center justify-between gap-4">
               <p className="text-sm text-neutral-500">
-                © Orga. 2025
+                © MandaBem 2026. Todos os direitos reservados.
               </p>
-              <div className="flex items-center gap-6">
-                <a href="#" className="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">Privacy Policy</a>
-                <a href="#" className="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">Terms & Conditions</a>
-              </div>
+              <p className="text-xs text-neutral-400">
+                Concurso cultural com critérios objetivos de avaliação
+              </p>
             </div>
           </div>
         </footer>

@@ -8,11 +8,10 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Products', href: '/produtos' },
-    { name: 'Solutions', href: '/solucoes' },
-    { name: 'Resources', href: '/recursos' },
-    { name: 'Pricing', href: '/precos' },
+    { name: 'Desafios', href: '/' },
+    { name: 'Como Funciona', href: '#como-funciona' },
+    { name: 'Minhas Participações', href: '/meus-envios' },
+    { name: 'Admin', href: '/admin' },
   ]
 
   return (
@@ -21,7 +20,7 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="text-2xl font-bold text-neutral-900">Orga.</div>
+            <div className="text-2xl font-bold text-neutral-900">MandaBem</div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -39,9 +38,11 @@ export function Header() {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <button className="btn btn-primary text-sm">
-              Contact us
-            </button>
+            <Link href="/">
+              <button className="btn btn-primary text-sm">
+                Participar
+              </button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -73,9 +74,11 @@ export function Header() {
               </Link>
             ))}
             <div className="pt-4">
-              <button className="btn btn-primary w-full text-sm">
-                Contact us
-              </button>
+              <Link href="/">
+                <button className="btn btn-primary w-full text-sm">
+                  Participar
+                </button>
+              </Link>
             </div>
           </div>
         </div>
