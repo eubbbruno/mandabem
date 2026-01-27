@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { ChallengeCard } from '@/components/ChallengeCard'
 import { CityFilter } from '@/components/CityFilter'
+import { ScrollButton } from '@/components/ScrollButton'
 
 interface PageProps {
   searchParams: Promise<{ city?: string }>
@@ -66,12 +67,12 @@ export default async function Home({ searchParams }: PageProps) {
 
             {/* CTA Buttons ÉPICOS */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
-              <a href="#desafios" className="btn-epic text-xl px-12 py-6">
+              <ScrollButton targetId="desafios" className="btn-epic text-xl px-12 py-6">
                 🚀 Ver Desafios
-              </a>
-              <a href="#como-funciona" className="card-brutal px-12 py-6 text-xl font-bold hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-500 hover:text-white transition-all">
+              </ScrollButton>
+              <ScrollButton targetId="como-funciona" className="card-brutal px-12 py-6 text-xl font-bold hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-500 hover:text-white transition-all">
                 📖 Como Funciona
-              </a>
+              </ScrollButton>
             </div>
 
             {/* Stats Cards BRUTAIS */}
@@ -288,9 +289,9 @@ export default async function Home({ searchParams }: PageProps) {
             <p className="text-3xl text-white font-bold">
               Escolha um desafio e mostre do que você é capaz! 💪
             </p>
-            <a href="#desafios" className="inline-block card-brutal px-16 py-8 text-2xl font-black bg-white hover:bg-sunshine-300 transition-all hover:scale-110">
+            <ScrollButton targetId="desafios" className="card-brutal px-16 py-8 text-2xl font-black bg-white hover:bg-sunshine-300 transition-all hover:scale-110">
               🎨 VER DESAFIOS AGORA
-            </a>
+            </ScrollButton>
           </div>
         </div>
       </section>
