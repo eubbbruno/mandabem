@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/lib/supabase/client'
 import { X } from 'lucide-react'
 
 interface AuthModalProps {
@@ -19,7 +19,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
 
   const formatCPF = (value: string) => {
     return value

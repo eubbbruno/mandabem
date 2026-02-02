@@ -3,14 +3,14 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { Menu, X, Sparkles, User, LogOut } from 'lucide-react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/lib/supabase/client'
 import AuthModal from './AuthModal'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
   const [showAuthModal, setShowAuthModal] = useState(false)
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
 
   useEffect(() => {
     // Verifica se tem usuário logado
