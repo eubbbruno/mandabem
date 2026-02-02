@@ -18,7 +18,7 @@ export async function isAdmin(userId?: string): Promise<boolean> {
     }
 
     // Busca o email do usuário
-    const { data: profile } = await supabase
+    const { data: profile }: { data: any } = await supabase
       .from('profiles')
       .select('email')
       .eq('id', userId)

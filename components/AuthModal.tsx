@@ -60,7 +60,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
               email, 
               cpf: cpf.replace(/\D/g, ''), 
               name 
-            })
+            } as any)
           if (profileError) {
             console.error('Profile error:', profileError)
             // Não falha se o perfil já existe
