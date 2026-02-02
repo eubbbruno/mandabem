@@ -191,6 +191,63 @@ export default async function ChallengePage({ params }: PageProps) {
         </section>
       )}
 
+      {/* Critérios de Avaliação - PARA LEIGOS */}
+      <section className="container pb-12">
+        <div className="card-brutal bg-white p-8 md:p-12">
+          <div className="text-center mb-8">
+            <div className="text-6xl mb-4">📊</div>
+            <h2 className="text-4xl font-black text-gray-900 mb-4">
+              Como Vão te Avaliar?
+            </h2>
+            <p className="text-xl text-gray-600 font-bold max-w-2xl mx-auto">
+              Os jurados vão dar nota de 0 a 10 em cada item. Quanto maior a nota, melhor!
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="flex items-start gap-4 p-6 rounded-2xl bg-gradient-to-br from-yellow-50 to-orange-50 border-2 border-yellow-200">
+              <div className="w-16 h-16 bg-yellow-500 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">🎨</div>
+              <div>
+                <p className="font-black text-yellow-700 text-lg mb-2">Criatividade (vale muito!)</p>
+                <p className="text-sm text-gray-700 font-medium">Sua ideia é diferente? Faz a pessoa rir ou pensar? Nunca viram algo assim?</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 p-6 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200">
+              <div className="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">🎯</div>
+              <div>
+                <p className="font-black text-green-700 text-lg mb-2">Tem a Ver com o Tema</p>
+                <p className="text-sm text-gray-700 font-medium">Se o desafio é sobre pizza, tem que ter pizza! Não adianta mandar foto de cachorro.</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200">
+              <div className="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">✨</div>
+              <div>
+                <p className="font-black text-blue-700 text-lg mb-2">Qualidade</p>
+                <p className="text-sm text-gray-700 font-medium">Tá bem feito? Dá pra ver direito? O texto tá escrito certo?</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 p-6 rounded-2xl bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200">
+              <div className="w-16 h-16 bg-purple-500 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">❤️</div>
+              <div>
+                <p className="font-black text-purple-700 text-lg mb-2">As Pessoas Gostaram</p>
+                <p className="text-sm text-gray-700 font-medium">Se você postou no Instagram, as pessoas curtiram? Comentaram coisas legais?</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 p-6 rounded-2xl bg-gradient-to-br from-orange-50 to-red-50 border-2 border-orange-200 md:col-span-2">
+              <div className="w-16 h-16 bg-orange-500 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">📢</div>
+              <div>
+                <p className="font-black text-orange-700 text-lg mb-2">Divulgação</p>
+                <p className="text-sm text-gray-700 font-medium">Você mostrou pro mundo? Postou nas redes? Marcou o estabelecimento? Quanto mais gente ver, melhor!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Como Participar - SIMPLES E CLARO */}
       <section className="container pb-12">
         <div className="card-brutal bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 p-8 md:p-12 text-white">

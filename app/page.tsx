@@ -102,44 +102,48 @@ export default async function Home({ searchParams }: PageProps) {
         <div className="container">
           <div className="text-center mb-20">
             <div className="inline-block mb-6">
-              <span className="text-6xl">🎯</span>
+              <span className="text-6xl">📖</span>
             </div>
             <h2 className="text-display-lg text-gradient mb-6">
-              Como funciona?
+              Como Funciona?
             </h2>
             <p className="text-2xl text-gray-600 font-bold max-w-2xl mx-auto">
-              Simples, rápido e transparente
+              É mais fácil que pedir uma pizza. Sério mesmo.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                number: '01',
+                number: '1️⃣',
                 emoji: '🎨',
-                title: 'Escolha um desafio',
-                description: 'Veja os desafios ativos nos bares da sua cidade',
+                title: 'Escolha um Desafio',
+                description: 'Olhe os desafios que estão rolando. Cada um tem um tema diferente.',
+                example: '💡 Exemplo: O Bar do Zé quer a foto mais engraçada de alguém comendo pastel. Prêmio: R$500!',
                 color: 'from-primary-500 to-orange-600',
               },
               {
-                number: '02',
-                emoji: '💡',
-                title: 'Crie sua resposta',
-                description: 'Envie foto ou texto criativo seguindo as regras',
+                number: '2️⃣',
+                emoji: '📸',
+                title: 'Mande sua Criação',
+                description: 'Tire uma foto ou escreva um texto. Pode ser do celular mesmo!',
+                example: '📸 Dica: Fotos com boa luz ficam melhores. Mas vale até foto tremida se for engraçada!',
                 color: 'from-secondary-500 to-pink-600',
               },
               {
-                number: '03',
-                emoji: '💳',
-                title: 'Pague via PIX',
-                description: 'R$ 7 na primeira. Preço aumenta progressivamente',
+                number: '3️⃣',
+                emoji: '💰',
+                title: 'Pague R$7 via Pix',
+                description: 'Cada participação custa R$7. É o preço de um lanche.',
+                example: '💰 Preços: 1ª vez = R$7 | 2ª vez = R$9,10 | 3ª vez = R$11,20',
                 color: 'from-accent-500 to-green-600',
               },
               {
-                number: '04',
+                number: '4️⃣',
                 emoji: '🏆',
-                title: 'Ganhe prêmios',
-                description: 'Jurados avaliam. Os melhores ganham!',
+                title: 'Torça e Ganhe!',
+                description: 'Jurados de verdade vão ver sua criação e dar uma nota.',
+                example: '🏆 Importante: Não é sorteio! Quem for mais criativo, ganha.',
                 color: 'from-electric-500 to-blue-600',
               },
             ].map((step, index) => (
@@ -152,12 +156,59 @@ export default async function Home({ searchParams }: PageProps) {
                   <h3 className="text-xl font-black text-gray-900 mb-3">
                     {step.title}
                   </h3>
-                  <p className="text-gray-600 font-medium leading-relaxed">
+                  <p className="text-gray-600 font-bold leading-relaxed mb-4">
                     {step.description}
                   </p>
+                  <div className="p-4 bg-gray-50 rounded-xl border-2 border-gray-200">
+                    <p className="text-xs text-gray-600 font-medium">
+                      {step.example}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* FAQ Simplificado */}
+          <div className="mt-20 max-w-4xl mx-auto">
+            <h3 className="text-3xl font-black text-center mb-12 text-gradient">
+              ❓ Perguntas que Todo Mundo Faz
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="card-brutal bg-gradient-to-br from-white to-gray-50 p-6">
+                <h4 className="font-black text-primary-600 mb-3 text-lg">É tipo um sorteio?</h4>
+                <p className="text-gray-700 font-medium text-sm leading-relaxed">
+                  Não! Aqui não tem sorte. Os jurados olham todas as participações e 
+                  escolhem as melhores. É um concurso de criatividade, não loteria.
+                </p>
+              </div>
+
+              <div className="card-brutal bg-gradient-to-br from-white to-gray-50 p-6">
+                <h4 className="font-black text-secondary-600 mb-3 text-lg">Posso participar mais de uma vez?</h4>
+                <p className="text-gray-700 font-medium text-sm leading-relaxed">
+                  Pode sim! Mas cada nova tentativa fica um pouco mais cara. 
+                  É pra dar chance pra todo mundo, não só pra quem tem mais dinheiro.
+                </p>
+              </div>
+
+              <div className="card-brutal bg-gradient-to-br from-white to-gray-50 p-6">
+                <h4 className="font-black text-accent-600 mb-3 text-lg">Como os jurados decidem?</h4>
+                <p className="text-gray-700 font-medium text-sm leading-relaxed">
+                  Eles olham 5 coisas: se é criativo, se tem a ver com o tema, 
+                  se tá bem feito, se as pessoas gostaram, e se você divulgou. 
+                  Cada coisa vale uma nota de 0 a 10.
+                </p>
+              </div>
+
+              <div className="card-brutal bg-gradient-to-br from-white to-gray-50 p-6">
+                <h4 className="font-black text-electric-600 mb-3 text-lg">É seguro? Vocês são de verdade?</h4>
+                <p className="text-gray-700 font-medium text-sm leading-relaxed">
+                  Sim! Somos uma empresa registrada. Seu dinheiro vai pro prêmio e 
+                  pra manter a plataforma funcionando. Tem regulamento, CNPJ, tudo certinho.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
