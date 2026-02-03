@@ -30,182 +30,211 @@ export default async function Home({ searchParams }: PageProps) {
 
   return (
     <div className="min-h-screen overflow-hidden">
-      {/* Hero Section ÉPICO */}
-      <section className="relative section pt-32 pb-20">
-        {/* Background Blobs Animados */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-primary-400 to-secondary-400 opacity-30 blur-3xl blob animate-float" />
-          <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-gradient-to-br from-accent-400 to-electric-400 opacity-30 blur-3xl blob animate-float" style={{ animationDelay: '1s' }} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-secondary-300 to-sunshine-300 opacity-20 blur-3xl blob animate-float" style={{ animationDelay: '2s' }} />
-        </div>
+      {/* Hero Section - SUPER CLARO */}
+      <section className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 via-gray-900 to-black px-4 py-20">
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full px-4 py-2 mb-8">
+            <span className="text-yellow-400 text-sm font-medium">🎮 Não é sorteio. É talento!</span>
+          </div>
 
-        <div className="container relative z-10">
-          <div className="max-w-5xl mx-auto text-center space-y-10">
-            {/* Badge NEON */}
-            <div className="inline-block animate-bounce-slow">
-              <div className="badge-neon text-white">
-                <span className="text-2xl">✨</span>
-                <span>Concurso Cultural 100% Legal</span>
-              </div>
-            </div>
+          {/* Título Principal */}
+          <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight text-white">
+            Mostre sua criatividade.<br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
+              Ganhe prêmios de verdade.
+            </span>
+          </h1>
 
-            {/* Headline EXPLOSIVO */}
-            <h1 className="text-display-2xl md:text-[7rem] leading-none">
-              <span className="block text-gradient-fire animate-pulse-slow">
-                SUA CRIATIVIDADE
-              </span>
-              <span className="block text-gray-900 mt-4">
-                VALE <span className="text-gradient">PRÊMIO</span>
-              </span>
-            </h1>
+          {/* Explicação SIMPLES */}
+          <p className="text-xl md:text-2xl text-gray-300 mb-4 max-w-2xl mx-auto">
+            Participe de desafios criativos em bares e restaurantes da sua cidade.
+          </p>
+          
+          <p className="text-lg text-gray-400 mb-8 max-w-xl mx-auto leading-relaxed">
+            📸 Tire uma foto criativa ou escreva um texto engraçado<br/>
+            💰 Pague só R$7 para participar<br/>
+            🏆 Se os jurados gostarem, você leva o prêmio!
+          </p>
 
-            {/* Subtitle */}
-            <p className="text-2xl md:text-3xl text-gray-700 font-bold max-w-3xl mx-auto">
-              Desafios criativos em bares e botecos. 
-              <span className="text-gradient"> Mostre seu talento</span> e ganhe prêmios reais! 💰
-            </p>
+          {/* Botões */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <ScrollButton targetId="desafios" className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-orange-500 text-black font-black rounded-2xl text-lg hover:scale-105 transition">
+              🎯 Ver Desafios Abertos
+            </ScrollButton>
+            <ScrollButton targetId="como-funciona" className="px-8 py-4 bg-gray-800 border-2 border-gray-700 text-white font-bold rounded-2xl text-lg hover:border-yellow-500 transition">
+              🤔 Como Funciona?
+            </ScrollButton>
+          </div>
 
-            {/* CTA Buttons ÉPICOS */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
-              <ScrollButton targetId="desafios" className="btn-epic text-xl px-12 py-6">
-                🚀 Ver Desafios
-              </ScrollButton>
-              <ScrollButton targetId="como-funciona" className="card-brutal px-12 py-6 text-xl font-bold hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-500 hover:text-white transition-all">
-                📖 Como Funciona
-              </ScrollButton>
-            </div>
-
-            {/* Stats Cards BRUTAIS */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16">
-              <div className="card-brutal p-8 bg-gradient-to-br from-primary-50 to-primary-100">
-                <div className="text-6xl font-black text-gradient mb-2">R$ 7</div>
-                <div className="text-lg font-bold text-gray-700">Primeira tentativa</div>
-              </div>
-              <div className="card-brutal p-8 bg-gradient-to-br from-secondary-50 to-secondary-100">
-                <div className="text-6xl font-black text-gradient mb-2">100%</div>
-                <div className="text-lg font-bold text-gray-700">Avaliação objetiva</div>
-              </div>
-              <div className="card-brutal p-8 bg-gradient-to-br from-accent-50 to-accent-100">
-                <div className="text-6xl font-black text-gradient mb-2">LEGAL</div>
-                <div className="text-lg font-bold text-gray-700">Concurso cultural</div>
-              </div>
-            </div>
+          {/* Prova Social Simples */}
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
+            <span>✅ Sem pegadinha</span>
+            <span>✅ Prêmio real via Pix</span>
+            <span>✅ Resultado por mérito</span>
           </div>
         </div>
-
-        {/* Decorative Elements */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
       </section>
 
-      {/* Como Funciona - ESTILO BRUTAL */}
-      <section id="como-funciona" className="section bg-white relative">
-        <div className="container">
-          <div className="text-center mb-20">
-            <div className="inline-block mb-6">
-              <span className="text-6xl">📖</span>
-            </div>
-            <h2 className="text-display-lg text-gradient mb-6">
-              Como Funciona?
-            </h2>
-            <p className="text-2xl text-gray-600 font-bold max-w-2xl mx-auto">
-              É mais fácil que pedir uma pizza. Sério mesmo.
+      {/* Como Funciona - SUPER DETALHADO */}
+      <section id="como-funciona" className="py-20 bg-black">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-black mb-4 text-white">🤔 Como Funciona?</h2>
+            <p className="text-xl text-gray-400">
+              É mais simples que pedir comida por delivery. Olha só:
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                number: '1️⃣',
-                emoji: '🎨',
-                title: 'Escolha um Desafio',
-                description: 'Olhe os desafios que estão rolando. Cada um tem um tema diferente.',
-                example: '💡 Exemplo: O Bar do Zé quer a foto mais engraçada de alguém comendo pastel. Prêmio: R$500!',
-                color: 'from-primary-500 to-orange-600',
-              },
-              {
-                number: '2️⃣',
-                emoji: '📸',
-                title: 'Mande sua Criação',
-                description: 'Tire uma foto ou escreva um texto. Pode ser do celular mesmo!',
-                example: '📸 Dica: Fotos com boa luz ficam melhores. Mas vale até foto tremida se for engraçada!',
-                color: 'from-secondary-500 to-pink-600',
-              },
-              {
-                number: '3️⃣',
-                emoji: '💰',
-                title: 'Pague R$7 via Pix',
-                description: 'Cada participação custa R$7. É o preço de um lanche.',
-                example: '💰 Preços: 1ª vez = R$7 | 2ª vez = R$9,10 | 3ª vez = R$11,20',
-                color: 'from-accent-500 to-green-600',
-              },
-              {
-                number: '4️⃣',
-                emoji: '🏆',
-                title: 'Torça e Ganhe!',
-                description: 'Jurados de verdade vão ver sua criação e dar uma nota.',
-                example: '🏆 Importante: Não é sorteio! Quem for mais criativo, ganha.',
-                color: 'from-electric-500 to-blue-600',
-              },
-            ].map((step, index) => (
-              <div key={index} className="group">
-                <div className="card-brutal p-8 h-full bg-white hover:bg-gradient-to-br hover:from-white hover:to-gray-50 transition-all">
-                  <div className="text-7xl mb-4 group-hover:animate-bounce">{step.emoji}</div>
-                  <div className={`text-5xl font-black bg-gradient-to-r ${step.color} bg-clip-text text-transparent mb-4`}>
-                    {step.number}
-                  </div>
-                  <h3 className="text-xl font-black text-gray-900 mb-3">
-                    {step.title}
-                  </h3>
-                  <p className="text-gray-600 font-bold leading-relaxed mb-4">
-                    {step.description}
+          {/* Passo a Passo Visual */}
+          <div className="space-y-8">
+            
+            {/* PASSO 1 */}
+            <div className="bg-gray-900 rounded-3xl p-8 border border-gray-800">
+              <div className="flex flex-col md:flex-row gap-6 items-start">
+                <div className="w-16 h-16 bg-yellow-500 rounded-2xl flex items-center justify-center text-3xl font-black text-black shrink-0">
+                  1
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-yellow-400 mb-3">Escolha um Desafio</h3>
+                  <p className="text-gray-300 text-lg mb-4">
+                    Cada bar ou restaurante parceiro cria um desafio diferente. 
+                    Por exemplo: "Foto mais criativa comendo nosso hambúrguer" ou 
+                    "Melhor frase sobre nossa cerveja artesanal".
                   </p>
-                  <div className="p-4 bg-gray-50 rounded-xl border-2 border-gray-200">
-                    <p className="text-xs text-gray-600 font-medium">
-                      {step.example}
+                  <div className="bg-gray-800 rounded-xl p-4">
+                    <p className="text-sm text-gray-400">
+                      <strong className="text-yellow-400">💡 Exemplo real:</strong> O Bar do Zé quer a foto mais 
+                      engraçada de alguém comendo pastel. Prêmio: R$500 em consumação!
                     </p>
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* PASSO 2 */}
+            <div className="bg-gray-900 rounded-3xl p-8 border border-gray-800">
+              <div className="flex flex-col md:flex-row gap-6 items-start">
+                <div className="w-16 h-16 bg-green-500 rounded-2xl flex items-center justify-center text-3xl font-black text-black shrink-0">
+                  2
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-green-400 mb-3">Crie e Envie</h3>
+                  <p className="text-gray-300 text-lg mb-4">
+                    Use seu celular mesmo! Tire a foto ou escreva o texto. 
+                    Não precisa ser profissional - o importante é ser CRIATIVO e DIVERTIDO.
+                  </p>
+                  <div className="bg-gray-800 rounded-xl p-4">
+                    <p className="text-sm text-gray-400">
+                      <strong className="text-green-400">📸 Dica:</strong> Fotos com boa luz ficam melhores, 
+                      mas já teve gente que ganhou com foto tremida porque era muito engraçada!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* PASSO 3 */}
+            <div className="bg-gray-900 rounded-3xl p-8 border border-gray-800">
+              <div className="flex flex-col md:flex-row gap-6 items-start">
+                <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center text-3xl font-black text-black shrink-0">
+                  3
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-blue-400 mb-3">Pague R$7 via Pix</h3>
+                  <p className="text-gray-300 text-lg mb-4">
+                    Cada participação custa R$7. É o preço de um lanche! 
+                    Esse dinheiro vai para o prêmio e para manter a plataforma funcionando.
+                  </p>
+                  <div className="bg-gray-800 rounded-xl p-4">
+                    <p className="text-sm text-gray-400 mb-2">
+                      <strong className="text-blue-400">💰 Por que o preço aumenta?</strong>
+                    </p>
+                    <p className="text-sm text-gray-400 mb-3">
+                      Se quiser tentar de novo no MESMO desafio, pode! Mas fica um pouco mais caro 
+                      pra dar chance pra todo mundo, não só pra quem tem mais dinheiro.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-3 py-1 bg-gray-700 rounded-full text-xs">1ª vez: R$7</span>
+                      <span className="px-3 py-1 bg-gray-700 rounded-full text-xs">2ª vez: R$9,10</span>
+                      <span className="px-3 py-1 bg-gray-700 rounded-full text-xs">3ª vez: R$11,20</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* PASSO 4 */}
+            <div className="bg-gray-900 rounded-3xl p-8 border border-gray-800">
+              <div className="flex flex-col md:flex-row gap-6 items-start">
+                <div className="w-16 h-16 bg-purple-500 rounded-2xl flex items-center justify-center text-3xl font-black text-black shrink-0">
+                  4
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-purple-400 mb-3">Jurados Avaliam</h3>
+                  <p className="text-gray-300 text-lg mb-4">
+                    Pessoas de verdade (não robôs!) olham todas as participações e dão notas. 
+                    Eles avaliam: criatividade, qualidade, se combina com o tema, e outras coisas.
+                  </p>
+                  <div className="bg-gray-800 rounded-xl p-4">
+                    <p className="text-sm text-gray-400">
+                      <strong className="text-purple-400">⚖️ Importante:</strong> NÃO É SORTEIO! 
+                      Quem for mais criativo e caprichoso, ganha. Simples assim.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* PASSO 5 */}
+            <div className="bg-gray-900 rounded-3xl p-8 border border-gray-800 border-yellow-500/50">
+              <div className="flex flex-col md:flex-row gap-6 items-start">
+                <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center text-3xl font-black text-black shrink-0">
+                  🏆
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-yellow-400 mb-3">Ganhe o Prêmio!</h3>
+                  <p className="text-gray-300 text-lg mb-4">
+                    Quando o desafio termina, a gente anuncia o vencedor e faz o Pix do prêmio 
+                    em até 7 dias. Pode ser dinheiro, vale-consumação, produtos... depende do desafio!
+                  </p>
+                  <div className="bg-gray-800 rounded-xl p-4">
+                    <p className="text-sm text-gray-400">
+                      <strong className="text-yellow-400">🎉 Resultado:</strong> Você acompanha o ranking 
+                      em tempo real e vê sua posição subindo (ou descendo) conforme mais pessoas participam.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* FAQ Simplificado */}
-          <div className="mt-20 max-w-4xl mx-auto">
-            <h3 className="text-3xl font-black text-center mb-12 text-gradient">
-              ❓ Perguntas que Todo Mundo Faz
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="card-brutal bg-gradient-to-br from-white to-gray-50 p-6">
-                <h4 className="font-black text-primary-600 mb-3 text-lg">É tipo um sorteio?</h4>
-                <p className="text-gray-700 font-medium text-sm leading-relaxed">
-                  Não! Aqui não tem sorte. Os jurados olham todas as participações e 
-                  escolhem as melhores. É um concurso de criatividade, não loteria.
+          {/* FAQ */}
+          <div className="mt-16">
+            <h3 className="text-2xl font-bold text-center mb-8 text-white">❓ Perguntas Frequentes</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-gray-900 rounded-xl p-5">
+                <h4 className="font-bold text-yellow-400 mb-2">É tipo uma loteria?</h4>
+                <p className="text-gray-400 text-sm">
+                  Não! Loteria é sorte. Aqui é TALENTO. Os jurados escolhem os melhores, não tem sorteio.
                 </p>
               </div>
-
-              <div className="card-brutal bg-gradient-to-br from-white to-gray-50 p-6">
-                <h4 className="font-black text-secondary-600 mb-3 text-lg">Posso participar mais de uma vez?</h4>
-                <p className="text-gray-700 font-medium text-sm leading-relaxed">
-                  Pode sim! Mas cada nova tentativa fica um pouco mais cara. 
-                  É pra dar chance pra todo mundo, não só pra quem tem mais dinheiro.
+              <div className="bg-gray-900 rounded-xl p-5">
+                <h4 className="font-bold text-yellow-400 mb-2">Posso participar de longe?</h4>
+                <p className="text-gray-400 text-sm">
+                  Alguns desafios são só pra quem vai no local. Outros você pode fazer de casa. Leia as regras de cada um!
                 </p>
               </div>
-
-              <div className="card-brutal bg-gradient-to-br from-white to-gray-50 p-6">
-                <h4 className="font-black text-accent-600 mb-3 text-lg">Como os jurados decidem?</h4>
-                <p className="text-gray-700 font-medium text-sm leading-relaxed">
-                  Eles olham 5 coisas: se é criativo, se tem a ver com o tema, 
-                  se tá bem feito, se as pessoas gostaram, e se você divulgou. 
-                  Cada coisa vale uma nota de 0 a 10.
+              <div className="bg-gray-900 rounded-xl p-5">
+                <h4 className="font-bold text-yellow-400 mb-2">E se eu não ganhar?</h4>
+                <p className="text-gray-400 text-sm">
+                  Você não perde nada além dos R$7. E ainda se divertiu criando algo legal! Tenta no próximo desafio.
                 </p>
               </div>
-
-              <div className="card-brutal bg-gradient-to-br from-white to-gray-50 p-6">
-                <h4 className="font-black text-electric-600 mb-3 text-lg">É seguro? Vocês são de verdade?</h4>
-                <p className="text-gray-700 font-medium text-sm leading-relaxed">
-                  Sim! Somos uma empresa registrada. Seu dinheiro vai pro prêmio e 
-                  pra manter a plataforma funcionando. Tem regulamento, CNPJ, tudo certinho.
+              <div className="bg-gray-900 rounded-xl p-5">
+                <h4 className="font-bold text-yellow-400 mb-2">Vocês são confiáveis?</h4>
+                <p className="text-gray-400 text-sm">
+                  Sim! Somos empresa registrada com CNPJ. Cada desafio tem regulamento público. Transparência total.
                 </p>
               </div>
             </div>
